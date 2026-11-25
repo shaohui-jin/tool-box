@@ -41,17 +41,23 @@ packages/
 │       ├── type/       # 组件 props / emits 类型
 │       └── stories/    # story 共用 fixture 与 MDX
 └── utils-lib/          # @shaohui_jin/utils-lib
-    └── src/            # 按主题拆分的纯函数与类型
+    └── src/            # 纯函数与类型；stories/ 放 story 共用面板
 ```
 
-## 组件文档
+## 文档
 
-文档由 Storybook 生成，stories 与组件同目录（`*.stories.ts`），
-Props / Events 表从 TypeScript 类型自动推导，不需要手写 API 表格。
+文档由 Storybook 生成，stories 与源码同目录。两个包都在同一个文档站里：
+
+- 组件：`packages/comp-lib/src/**/*.stories.ts`，Props / Events 表从 TS 类型自动推导
+- 工具：`packages/utils-lib/src/**/*.stories.ts`（交互式面板）与类型体操的 MDX
 
 ```bash
-pnpm storybook
+pnpm storybook          # 本地预览
+pnpm build-storybook    # 构建静态站
 ```
+
+提交到 `master` 后，[deploy-storybook.yml](.github/workflows/deploy-storybook.yml)
+会自动把文档站发布到 GitHub Pages。npm 发布是另一条流水，保持手动。
 
 ## 发布
 

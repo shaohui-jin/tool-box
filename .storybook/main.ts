@@ -5,11 +5,16 @@ import type { StorybookConfig } from "@storybook/vue3-vite";
 /**
  * Storybook 10 + Vite。
  *
- * stories 直接写在组件包内（`packages/comp-lib/src/**`），和源码同目录，
- * 组件改动与示例一眼能对上。
+ * stories 直接写在各自包的 src 内，和源码同目录，
+ * 实现改动与示例一眼能对上。
  */
 const config: StorybookConfig = {
-  stories: ["../packages/comp-lib/src/**/*.mdx", "../packages/comp-lib/src/**/*.stories.ts"],
+  stories: [
+    "../packages/comp-lib/src/**/*.mdx",
+    "../packages/comp-lib/src/**/*.stories.ts",
+    "../packages/utils-lib/src/**/*.mdx",
+    "../packages/utils-lib/src/**/*.stories.ts",
+  ],
   addons: ["@storybook/addon-docs", "@storybook/addon-a11y"],
   framework: {
     name: "@storybook/vue3-vite",
@@ -31,6 +36,9 @@ const config: StorybookConfig = {
       // story 里用包名导入，写法与真实使用者一致；指向源码便于热更新
       "@shaohui_jin/comp-lib": fileURLToPath(
         new URL("../packages/comp-lib/src/index.ts", import.meta.url),
+      ),
+      "@shaohui_jin/utils-lib": fileURLToPath(
+        new URL("../packages/utils-lib/src/index.ts", import.meta.url),
       ),
     };
 

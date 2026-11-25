@@ -16,7 +16,8 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "sideEffects": [
     "*.css",
@@ -65,6 +66,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaohui-jin/tool-box.git",
+    "directory": "packages/comp-lib"
+  },
+  "homepage": "https://shaohui-jin.github.io/tool-box/",
   "keywords": [
     "vue",
     "vue3",

@@ -1,0 +1,69 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="介绍/工具库" />
+
+# @shaohui_jin/utils-lib
+
+零依赖的 TypeScript 工具函数与类型体操合集。
+
+「零依赖」不是口号，是硬约束：它要能被 Node 脚本、SSR、非 Vue 前端、甚至 Deno 直接 import，
+所以包内不引用 vue、不引用 lodash、不引用任何运行时库。构建产物 `dist/index.js` 只有几 KB。
+
+## 安装
+
+```bash
+pnpm add @shaohui_jin/utils-lib
+```
+
+## 引入
+
+```ts
+// 按需引入（推荐，tree-shaking 友好）
+import { debounce, flattenTree, rgbaToHex } from "@shaohui_jin/utils-lib";
+
+// 类型体操
+import type { getOptional, arrayToUnion } from "@shaohui_jin/utils-lib";
+```
+
+## 模块一览
+
+| 模块 | 导出 | 说明 |
+| --- | --- | --- |
+| [颜色](/docs/工具-颜色-color--docs) | `rgbaToHex` `hexToRGBA` `colorToRGBA` | rgb/rgba 字符串与 hex 互转 |
+| [数字](/docs/工具-数字-number--docs) | `getRandom` `scaleFormat` | 闭区间随机整数、修浮点显示 |
+| [对象](/docs/工具-对象-object--docs) | `flattenObj` `unFlatten` `isObjEqual` `isObjEmpty` | 扁平化/还原、深度比较、判空 |
+| [数组](/docs/工具-数组-array--docs) | `flattenTree` `isArrEqual` | 树扁平化、无序比较 |
+| [剪贴板](/docs/工具-剪贴板-clipboard--docs) | `copyToClipboard` | 带 execCommand 回退的复制 |
+| [防抖](/docs/工具-防抖-debounce--docs) | `debounce` | 纯函数防抖，无 Vue 依赖 |
+| [性能](/docs/工具-性能-optimize--docs) | `performChunk` `concurRequest` | 分片执行、并发控制 |
+| [权限](/docs/工具-权限-permission--docs) | `usePermission` | 位运算权限，上限 31 位 |
+| [类型体操](/docs/工具-类型体操-typescript--docs) | 5 个类型 | 只在编译期存在，零运行时开销 |
+
+## 边界与注意事项
+
+**只在浏览器可用的函数**
+
+`copyToClipboard` 依赖 `navigator.clipboard` 或 `document`，在 Node / SSR 下会抛错。
+其余函数都是纯计算，任何环境都能用。
+
+**权限位上限**
+
+`usePermission` 用 `1 << i` 编码权限，第 32 位会落到符号位，所以最多 31 个权限位。
+超过这个量级请改用 `Set<string>`。
+
+**`flattenObj` 的键名限制**
+
+它用 `.` 作路径分隔符。如果数据本身的键含 `.`，`unFlatten` 会拆错 —— 这类数据别用这一对。
+
+**`scaleFormat` 的舍入**
+
+内部是 `toFixed`，`1.005` 会得到 `"1.00"`。这是 IEEE 754 的固有行为。
+需要精确十进制舍入请用 decimal 库，不要指望这个函数。
+
+## 与组件库的分工
+
+`@shaohui_jin/comp-lib` 依赖本包，反向不成立。组件库只从这里取纯函数
+（如 `CanvasTime` 用 `colorToRGBA` 与 `getRandom`），本包不知道组件库的存在。
+
+所以：**通用计算放这里，带 UI 语义的放组件库**。`getCompType`（取组件实例 ref）
+就是典型的后者，已从工具库移除。

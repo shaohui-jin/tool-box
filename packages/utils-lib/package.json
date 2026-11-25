@@ -14,7 +14,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "sideEffects": false,
   "scripts": {
@@ -34,6 +35,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaohui-jin/tool-box.git",
+    "directory": "packages/utils-lib"
+  },
+  "homepage": "https://shaohui-jin.github.io/tool-box/",
   "keywords": [
     "utils",
     "typescript",

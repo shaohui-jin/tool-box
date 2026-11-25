@@ -1,0 +1,141 @@
+/**
+ * 纯函数 story 的面板样式。
+ *
+ * 类名统一 `ud-` 前缀，与组件库的样式不会撞。
+ * 只在 stories 里被引用，不进 dist。
+ */
+.ud-panel {
+  max-width: 720px;
+  padding: 16px;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+  font-family: ui-monospace, sfmono-regular, consolas, monospace;
+  font-size: 13px;
+}
+
+.ud-panel__title {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f2f5;
+  color: #303133;
+  font-weight: 600;
+  font-family: system-ui, sans-serif;
+}
+
+.ud-panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ud-panel__result {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed #e4e7ed;
+}
+
+.ud-panel__label {
+  flex: none;
+  color: #909399;
+  font-family: system-ui, sans-serif;
+}
+
+.ud-panel__value {
+  color: #409eff;
+  word-break: break-all;
+}
+
+.ud-panel__footer {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ud-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ud-row__label {
+  flex: none;
+  min-width: 108px;
+  color: #606266;
+  font-family: system-ui, sans-serif;
+}
+
+.ud-row__hint {
+  color: #c0c4cc;
+  font-size: 12px;
+}
+
+.ud-row__control {
+  flex: 1;
+  min-width: 0;
+}
+
+.ud-row__control input[type="text"],
+.ud-row__control input[type="number"],
+.ud-row__control textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.ud-row__control input:focus,
+.ud-row__control textarea:focus {
+  border-color: #409eff;
+  outline: none;
+}
+
+.ud-log {
+  max-height: 160px;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+  color: #606266;
+}
+
+.ud-log__item {
+  padding: 2px 0;
+  border-bottom: 1px solid #f5f7fa;
+}
+
+.ud-log__empty {
+  color: #c0c4cc;
+}
+
+.ud-btn {
+  padding: 5px 12px;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  background: #fff;
+  color: #606266;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ud-btn:hover {
+  border-color: #409eff;
+  color: #409eff;
+}
+
+.ud-btn--primary {
+  border-color: #409eff;
+  background: #409eff;
+  color: #fff;
+}
+
+.ud-btn--primary:hover {
+  background: #66b1ff;
+  color: #fff;
+}

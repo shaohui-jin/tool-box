@@ -18,13 +18,13 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    docs: { 
+    docs: {
       // 每个组件自动生成 Docs 页，Props/Events 表从 TS 类型推导
       defaultName: "文档",
     },
     options: {
       storySort: {
-        order: ["基础", "交互", "CRUD", "主题配置"],
+        order: ["介绍", "工具", "基础", "交互", "CRUD", "主题配置"],
       },
     },
   },

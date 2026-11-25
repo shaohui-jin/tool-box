@@ -1,0 +1,76 @@
+import { Meta, Source } from "@storybook/addon-docs/blocks";
+
+<Meta title="工具/类型体操 typescript" />
+
+# 类型体操 typescript
+
+只在编译期存在，**不产生任何运行时代码**。导入后不会增加包体积。
+
+```ts
+import type { getValue, setValue, getOptional, setOptional, arrayToUnion } from "@shaohui_jin/utils-lib";
+```
+
+---
+
+## getValue
+
+把对象属性批量映射成 `getXxx` 形式的属性。
+
+<Source language="ts" code={`
+type Source = { name: string; age: number };
+type Getters = getValue<Source>;
+// { getName: string; getAge: number }
+`} />
+
+## setValue
+
+与 `getValue` 对称，映射成 `setXxx`。
+
+<Source language="ts" code={`
+type Source = { name: string; age: number };
+type Setters = setValue<Source>;
+// { setName: string; setAge: number }
+`} />
+
+## getOptional
+
+只保留可选属性，把必选属性过滤掉。
+
+<Source language="ts" code={`
+type Source = { id: number; name?: string; age?: number };
+type OptionalOnly = getOptional<Source>;
+// { name?: string; age?: number }
+`} />
+
+## setOptional
+
+把指定的一组 key 变成可选，其余不变。
+
+<Source language="ts" code={`
+type Source = { id: number; name: string; age: number };
+type Partial1 = setOptional<Source, "name" | "age">;
+// { id: number; name?: string; age?: number }
+`} />
+
+## arrayToUnion
+
+数组类型转联合类型。写常量表时很常用：一处定义，既拿到数组值又能拿到联合类型。
+
+<Source language="ts" code={`
+const PERMISSIONS = ["add", "edit", "delete"] as const;
+type Permission = arrayToUnion<typeof PERMISSIONS>;
+// "add" | "edit" | "delete"
+`} />
+
+配合 `as const` 使用是关键：不加的话数组元素会被推成 `string`，联合类型就退化了。
+
+---
+
+## 已移除的两个类型/函数
+
+| 名称 | 为什么移除 |
+| --- | --- |
+| `useDebounceRef` | 依赖 vue 的 `customRef`，会让零依赖的工具库被迫引入 vue |
+| `getCompType` | 依赖 vue 的 `ref`，同上；且它返回组件实例 ref，本质属于组件库而非工具库 |
+
+需要这两个能力时，在业务层自己包一层即可 —— 它们只是两行语法糖，不值得为它破坏包边界。
