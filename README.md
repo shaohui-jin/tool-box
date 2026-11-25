@@ -1,6 +1,8 @@
-# comp-lib
+# tool-box
 
 shaohui_jin 的组件库与工具库，pnpm monorepo。
+
+> 仓库名 `tool-box`；本地文件夹名沿用 `comp-lib` 只是历史原因，与包名无关。
 
 | 包 | 说明 | 依赖 |
 | --- | --- | --- |
