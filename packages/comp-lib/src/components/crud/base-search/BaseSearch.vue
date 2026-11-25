@@ -151,10 +151,14 @@ $search-stack-gap: var(--comp-font-size-base, 14px);
 $search-label-max: 90px;
 $search-control-width: 200px;
 $search-daterange-width: 350px;
-// 标准字段 + 日期范围并排的最小容器宽度（含 padding，不压缩桌面端日期范围展示）
+// 标准字段 + 日期范围并排的最小容器宽度（含 padding，不压缩桌面端日期范围展示）。
+// 拆成多个短变量累加，避免单行过长被 prettier 折行 —— 折在 `+` 之后会触发
+// stylelint 的 scss/operator-no-newline-after
+$search-stack-fields: #{$search-label-max} + #{$search-control-width};
+$search-stack-range: 80px + #{$search-daterange-width};
+$search-stack-padding: 16px + 32px;
 $search-stack-bp: calc(
-  (#{$search-label-max} + #{$search-control-width}) + (80px + #{$search-daterange-width}) + 16px +
-    32px
+  calc(#{$search-stack-fields} + #{$search-stack-range}) + #{$search-stack-padding}
 );
 
 .crud-base-search {

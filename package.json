@@ -22,6 +22,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "preview-storybook": "http-server storybook-static -p 6007 -c-1 --silent",
+    "shoot:readme": "node scripts/shoot-readme.mjs",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -39,7 +40,9 @@
     "husky": "^9.1.7",
     "http-server": "^14.1.1",
     "postcss-html": "^1.7.0",
+    "playwright": "^1.65.1",
     "prettier": "^3.3.3",
+    "remark-gfm": "^4.0.1",
     "sass": "^1.81.0",
     "storybook": "^10.6.8",
     "stylelint": "^17.15.0",

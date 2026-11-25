@@ -23,6 +23,12 @@ const config: StorybookConfig = {
   core: {
     disableTelemetry: true,
   },
+  /**
+   * MDX 编译管线的补丁，见 preset-mdx-gfm.ts。
+   *
+   * Storybook 内置 MDX 是 CommonMark，不含 GFM，管道表格会被渲染成一整行文本。
+   */
+  presets: [fileURLToPath(new URL("./preset-mdx-gfm.ts", import.meta.url))],
   async viteFinal(config) {
     const srcDir = fileURLToPath(new URL("../packages/comp-lib/src", import.meta.url));
 
