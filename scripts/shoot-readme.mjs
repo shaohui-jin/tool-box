@@ -8,6 +8,10 @@
  *
  * 运行：pnpm build-storybook && pnpm shoot:readme
  * 产物：docs/images/*.png
+ *
+ * 截图策略：用元素截图（locator.screenshot）而不是整页截图。
+ * 整页截图会带上 story 容器的大量空白 —— 实测 BaseSearch 内容只有 88px 高，
+ * 整页截 640px 高就是 86% 纯白。裁到元素后图里只剩内容。
  */
 import { spawn } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
@@ -24,93 +28,91 @@ const BASE = `http://127.0.0.1:${PORT}`;
 /**
  * 要截的页面。
  *
- * `id` 是 Storybook 的 story id（见 storybook-static/index.json）；
- * `clip` 用来裁掉 story 容器自带的留白 —— 直接整页截会带一圈白边，
- * 贴进 README 后各图边距不一致，看起来不整齐。
+ * `id` 是 Storybook 的 story id（见 storybook-static/index.json）。
+ * `width` 是 viewport 宽度 —— 它决定内容宽度，不能随便改小：
+ * 窄了横向表单会换行、表格列会被压缩。高度不指定，由元素截图自动裁。
+ *
+ * `minHeight` 用于内容特别扁的场景（如查询栏只有 88px），
+ * 给它一点上下留白，免得在 README 里成一条线。
  */
 const SHOTS = [
   {
     file: "hero-crud.png",
     id: "crud-basecrud-页面骨架--default",
-    width: 1180,
-    height: 720,
+    // demoSettingColumns 列宽合计约 640px + 选择/索引列，
+    // 容器再宽表格也不会拉伸，只会多出右侧空白
+    width: 820,
     note: "README 头图：完整 CRUD 页面骨架",
   },
   {
     file: "table-element.png",
     id: "crud-basetable-表格--element",
-    width: 1180,
-    height: 480,
+    width: 900,
     note: "BaseTable element 模式",
   },
   {
     file: "table-virtual.png",
     id: "crud-basetable-表格--virtual",
-    width: 1180,
-    height: 480,
+    width: 900,
     note: "BaseTable virtual 模式",
   },
   {
     file: "table-canvas.png",
     id: "crud-basetable-表格--canvas",
-    width: 1180,
-    height: 480,
+    width: 900,
     note: "BaseTable canvas 模式（与 canvas-tile 视觉一致，故只留一张）",
   },
   {
     file: "table-loading.png",
     id: "crud-basetable-表格--loading",
-    width: 1180,
-    height: 480,
+    width: 900,
     note: "BaseTable 加载态",
   },
   {
     file: "search-form.png",
     id: "crud-basesearch-查询表单--default",
-    width: 1180,
-    height: 320,
+    // 查询栏把操作按钮推到最右，宽了中间会空一大片，900 更紧凑
+    width: 900,
+    minHeight: 130,
     note: "查询表单",
   },
   {
     file: "themes.png",
     id: "主题配置-configprovider--presets",
-    width: 1100,
-    height: 460,
+    // 四个 200px 卡片 + 三个 16px 间距 = 848，取 880 留一点余量
+    width: 880,
     note: "四个主题预设并排",
   },
   {
     file: "components-basic.png",
     id: "基础-imagecarousel-图片轮播--default",
     width: 900,
-    height: 460,
     note: "基础组件：3D 图片轮播",
   },
   {
     file: "components-interaction.png",
     id: "交互-stepwizard-步骤向导--default",
     width: 900,
-    height: 420,
     note: "交互组件：步骤向导",
   },
   {
     file: "heatmap.png",
     id: "交互-heatmapcalendar-热力图--full-year",
     width: 900,
-    height: 320,
+    minHeight: 130,
     note: "热力图，一年数据",
   },
   {
     file: "canvas-time.png",
     id: "交互-canvastime-粒子时钟--dark",
     width: 640,
-    height: 300,
     note: "Canvas 粒子时钟",
   },
   {
     file: "utils-panel.png",
     id: "工具-颜色-color--rgba-to-hex",
     width: 820,
-    height: 320,
+    minHeight: 180,
     note: "工具库交互面板",
   },
 ];
@@ -145,11 +147,14 @@ async function main() {
 
   mkdirSync(OUT_DIR, { recursive: true });
 
-  // --silent 会吞掉地址输出，但我们需要看错误，所以只静默请求日志
   const server = spawn(
-    process.platform === "win32" ? "npx.cmd" : "npx",
+    "npx.cmd",
     ["http-server", "storybook-static", "-p", String(PORT), "-c-1", "--silent"],
-    { cwd: ROOT, stdio: "ignore", shell: process.platform === "win32" },
+    {
+      cwd: ROOT,
+      stdio: "ignore",
+      shell: true,
+    },
   );
 
   const errors = [];
@@ -160,15 +165,15 @@ async function main() {
 
     browser = await chromium.launch();
     const context = await browser.newContext({
-      viewport: { width: 1280, height: 800 },
-      // Retina 下清晰；同时控制总体积（见 README 的 3MB 预算）
+      viewport: { width: 1400, height: 900 },
+      // Retina 下清晰；同时控制总体积
       deviceScaleFactor: 2,
       locale: "zh-CN",
     });
 
     for (const shot of SHOTS) {
       const page = await context.newPage();
-      await page.setViewportSize({ width: shot.width, height: shot.height });
+      await page.setViewportSize({ width: shot.width, height: 900 });
 
       page.on("console", (msg) => {
         if (msg.type() === "error") errors.push(`[${shot.file}] console: ${msg.text()}`);
@@ -183,8 +188,26 @@ async function main() {
         // Canvas / 动画类组件需要额外时间才是稳定帧
         await page.waitForTimeout(900);
 
-        await page.screenshot({ path: join(OUT_DIR, shot.file) });
-        console.log(`ok   ${shot.file}  (${shot.note})`);
+        // 截 story 根节点的第一个子元素：它才是真正的内容。
+        // #storybook-root 是撑满 viewport 的 block，截它会带回整页留白。
+        const target = page.locator("#storybook-root > *").first();
+        const box = await target.boundingBox();
+        if (!box) throw new Error("找不到内容元素");
+
+        // 内容过扁时补一点上下留白（改 padding 而非放大画布）
+        if (shot.minHeight && box.height < shot.minHeight) {
+          await page.addStyleTag({
+            content: `#storybook-root > * { padding-top: 12px; padding-bottom: 12px; }`,
+          });
+          await page.waitForTimeout(120);
+        }
+
+        await target.screenshot({ path: join(OUT_DIR, shot.file) });
+
+        const finalBox = (await target.boundingBox()) ?? box;
+        console.log(
+          `ok   ${shot.file}  ${Math.round(finalBox.width)}x${Math.round(finalBox.height)}`,
+        );
       } catch (e) {
         console.error(`ERR  ${shot.file}: ${e.message}`);
         errors.push(`[${shot.file}] ${e.message}`);
@@ -200,7 +223,9 @@ async function main() {
   }
 
   const total = pngSize(OUT_DIR);
-  console.log(`\n共 ${SHOTS.length} 张，合计 ${(total / 1024 / 1024).toFixed(2)} MB -> docs/images/`);
+  console.log(
+    `\n共 ${SHOTS.length} 张，合计 ${(total / 1024 / 1024).toFixed(2)} MB -> docs/images/`,
+  );
 
   if (errors.length) {
     console.log(`\n发现 ${errors.length} 个运行时问题：`);

@@ -37,28 +37,59 @@ export const Presets: Story = {
   render: () => ({
     components: { ConfigProvider, Tag, Dot },
     setup() {
+      /**
+       * 卡片必须自己消费主题变量，否则四个预设看起来一模一样。
+       * ConfigProvider 注入的是 CSS 自定义属性（--comp-*），
+       * 只有真正引用它们的元素才会变化 —— 写死 #fff 的容器不会。
+       */
+      const cardStyle = {
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
+        padding: "14px",
+        borderRadius: "var(--comp-radius-md, 6px)",
+        background: "var(--comp-bg-card, #fff)",
+        border: "1px solid var(--comp-border-color, #ebeef5)",
+        color: "var(--comp-text-primary, #303133)",
+        fontFamily: "var(--comp-font-family, system-ui)",
+        fontSize: "var(--comp-font-size-base, 14px)",
+      };
+      const titleStyle = {
+        color: "var(--comp-text-heading, #1d2129)",
+        fontWeight: "600",
+      };
+      const mutedStyle = {
+        color: "var(--comp-text-regular, #606266)",
+        fontSize: "var(--comp-font-size-sm, 13px)",
+      };
       return {
         presets: Object.keys(themePresets) as Array<keyof typeof themePresets>,
         swatches: themePresetSwatches,
         themePresets,
+        cardStyle,
+        titleStyle,
+        mutedStyle,
       };
     },
     template: `
-      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-        <div v-for="key in presets" :key="key" style="width: 220px;">
+      <div style="display: inline-flex; gap: 16px; align-items: flex-start;">
+        <div v-for="key in presets" :key="key" style="width: 200px;">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
             <i :style="{
               display: 'inline-block', width: '14px', height: '14px', borderRadius: '50%',
               background: swatches[key]
             }" />
-            <strong>{{ key }}</strong>
+            <strong style="font-size: 13px;">{{ key }}</strong>
           </div>
           <ConfigProvider :theme="themePresets[key]">
-            <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px;
-              border: 1px solid #ebeef5; border-radius: 6px;">
-              <Tag label="成功" type="success" />
-              <Tag label="警告" type="warning" />
-              <Dot color="#409eff" text="示例圆点" />
+            <div :style="cardStyle">
+              <div :style="titleStyle">卡片标题</div>
+              <div :style="mutedStyle">正文示例文字，用来观察字号与行高</div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <Tag label="成功" type="success" />
+                <Tag label="警告" type="warning" />
+              </div>
+              <Dot color="var(--comp-color-primary)" text="主色圆点" />
             </div>
           </ConfigProvider>
         </div>

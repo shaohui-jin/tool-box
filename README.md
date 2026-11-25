@@ -9,16 +9,16 @@ Vue 3 组件库与零依赖工具库。一个 monorepo，两个可独立发布�
 
 **[在线文档](https://shaohui-jin.github.io/tool-box/)** · 23 个组件 · 20 个工具函数 · 5 种表格渲染引擎
 
-![CRUD 页面骨架](docs/images/hero-crud.png)
+<img src="docs/images/hero-crud.png" alt="CRUD 页面骨架" width="100%" />
 
 ---
 
 ## 这个项目是什么
 
-| 包 | 内容 | 依赖 |
-| --- | --- | --- |
-| [`@shaohui_jin/comp-lib`](packages/comp-lib) | Vue 3 组件库，含 CRUD 表格、交互组件与主题配置系统 | vue、element-plus |
-| [`@shaohui_jin/utils-lib`](packages/utils-lib) | 工具函数与类型体操，**零运行时依赖** | 无 |
+| 包                                             | 内容                                               | 依赖              |
+| ---------------------------------------------- | -------------------------------------------------- | ----------------- |
+| [`@shaohui_jin/comp-lib`](packages/comp-lib)   | Vue 3 组件库，含 CRUD 表格、交互组件与主题配置系统 | vue、element-plus |
+| [`@shaohui_jin/utils-lib`](packages/utils-lib) | 工具函数与类型体操，**零运行时依赖**               | 无                |
 
 两者是单向依赖：comp-lib 用 utils-lib 的纯函数，反向不成立。
 所以 utils-lib 可以被 Node 脚本、SSR、非 Vue 前端直接 import。
@@ -32,13 +32,16 @@ Vue 3 组件库与零依赖工具库。一个 monorepo，两个可独立发布�
 同一个 `columns` 数组，切换 `mode` 就能从 Element Plus 的 `el-table` 换到 Canvas 手绘。
 数据量从几十行到几十万行，不用改业务代码。
 
-| element | virtual |
-| --- | --- |
-| ![element](docs/images/table-element.png) | ![virtual](docs/images/table-virtual.png) |
-
-| canvas | loading |
-| --- | --- |
-| ![canvas](docs/images/table-canvas.png) | ![loading](docs/images/table-loading.png) |
+<table>
+<tr>
+<td width="50%"><img src="docs/images/table-element.png" alt="element 模式" /></td>
+<td width="50%"><img src="docs/images/table-virtual.png" alt="virtual 模式" /></td>
+</tr>
+<tr>
+<td><img src="docs/images/table-canvas.png" alt="canvas 模式" /></td>
+<td><img src="docs/images/table-loading.png" alt="加载态" /></td>
+</tr>
+</table>
 
 > `canvas` 与 `canvas-tile` 视觉一致（都是 Canvas 绘制，差别在重绘策略），所以只放一张。
 
@@ -47,7 +50,7 @@ Vue 3 组件库与零依赖工具库。一个 monorepo，两个可独立发布�
 `createCompLib({ theme })` 注入的 CSS 变量同时覆盖 `--comp-*`（组件库自有）
 与 `--el-*`（Element Plus），所以库内组件和原生 `el-*` 组件不会出现两种配色。
 
-![主题预设](docs/images/themes.png)
+<img src="docs/images/themes.png" alt="四个主题预设" width="100%" />
 
 **零依赖的工具库**
 
@@ -67,23 +70,26 @@ stories 与源码同目录，Props / Events 表从 TypeScript 类型自动推导
 
 `Tag` `Dot` `Image3D` `ImageCarousel` `ImagePointer` `ImageLightbox` `CodeBlock` `WidgetTabs`
 
-![基础组件](docs/images/components-basic.png)
+<img src="docs/images/components-basic.png" alt="3D 图片轮播" width="100%" />
 
 ### 交互
 
 `SplitPane` `DragSortList` `FloatingToolbar` `TreeTransfer` `StepWizard` `ContextMenu` `CanvasTime` `CanvasCountUp` `HeatmapCalendar`
 
-![交互组件](docs/images/components-interaction.png)
+<img src="docs/images/components-interaction.png" alt="步骤向导" width="100%" />
 
-![热力图](docs/images/heatmap.png)
-
-![Canvas 粒子时钟](docs/images/canvas-time.png)
+<table>
+<tr>
+<td width="50%"><img src="docs/images/heatmap.png" alt="热力图" /></td>
+<td width="50%"><img src="docs/images/canvas-time.png" alt="Canvas 粒子时钟" /></td>
+</tr>
+</table>
 
 ### CRUD
 
 `BaseTable` `BaseSearch` `BaseSearchField` `BaseSearchDrawer` `BaseColumnSetting` `BaseCrud`
 
-![查询表单](docs/images/search-form.png)
+<img src="docs/images/search-form.png" alt="查询表单" width="100%" />
 
 ---
 
@@ -117,18 +123,18 @@ flowchart TB
 
 九个模块，每个函数都有可交互的文档页（改参数实时看返回值）。
 
-![工具库交互面板](docs/images/utils-panel.png)
+<img src="docs/images/utils-panel.png" alt="工具库交互面板" width="100%" />
 
-| 模块 | 导出 | 说明 |
-| --- | --- | --- |
-| 颜色 | `rgbaToHex` `hexToRGBA` `colorToRGBA` | rgb/rgba 字符串与 hex 互转 |
-| 数字 | `getRandom` `scaleFormat` | 闭区间随机整数、修浮点显示 |
-| 对象 | `flattenObj` `unFlatten` `isObjEqual` `isObjEmpty` | 扁平化/还原、深度比较、判空 |
-| 数组 | `flattenTree` `isArrEqual` | 树扁平化、无序比较 |
-| 剪贴板 | `copyToClipboard` | 带 execCommand 回退的复制 |
-| 防抖 | `debounce` | 纯函数防抖，无 Vue 依赖 |
-| 性能 | `performChunk` `concurRequest` | 分片执行、并发控制 |
-| 权限 | `usePermission` | 位运算权限，上限 31 位 |
+| 模块     | 导出                                                             | 说明                         |
+| -------- | ---------------------------------------------------------------- | ---------------------------- |
+| 颜色     | `rgbaToHex` `hexToRGBA` `colorToRGBA`                            | rgb/rgba 字符串与 hex 互转   |
+| 数字     | `getRandom` `scaleFormat`                                        | 闭区间随机整数、修浮点显示   |
+| 对象     | `flattenObj` `unFlatten` `isObjEqual` `isObjEmpty`               | 扁平化/还原、深度比较、判空  |
+| 数组     | `flattenTree` `isArrEqual`                                       | 树扁平化、无序比较           |
+| 剪贴板   | `copyToClipboard`                                                | 带 execCommand 回退的复制    |
+| 防抖     | `debounce`                                                       | 纯函数防抖，无 Vue 依赖      |
+| 性能     | `performChunk` `concurRequest`                                   | 分片执行、并发控制           |
+| 权限     | `usePermission`                                                  | 位运算权限，上限 31 位       |
 | 类型体操 | `getValue` `setValue` `getOptional` `setOptional` `arrayToUnion` | 只在编译期存在，零运行时开销 |
 
 ---
@@ -163,17 +169,17 @@ app.mount("#app");
 
 ## 常用命令
 
-| 命令 | 作用 |
-| --- | --- |
-| `pnpm build` | 构建两个包 |
-| `pnpm typecheck` | vue-tsc + tsc |
-| `pnpm test` | utils-lib 单测 |
-| `pnpm test:hooks` | 提交钩子单测 |
-| `pnpm lint` | eslint + stylelint |
-| `pnpm storybook` | 文档站开发模式，6006 端口 |
-| `pnpm build-storybook` | 构建静态文档站 |
-| `pnpm preview-storybook` | 预览构建产物，6007 端口 |
-| `pnpm shoot:readme` | 重新生成本文档里的截图 |
+| 命令                     | 作用                      |
+| ------------------------ | ------------------------- |
+| `pnpm build`             | 构建两个包                |
+| `pnpm typecheck`         | vue-tsc + tsc             |
+| `pnpm test`              | utils-lib 单测            |
+| `pnpm test:hooks`        | 提交钩子单测              |
+| `pnpm lint`              | eslint + stylelint        |
+| `pnpm storybook`         | 文档站开发模式，6006 端口 |
+| `pnpm build-storybook`   | 构建静态文档站            |
+| `pnpm preview-storybook` | 预览构建产物，6007 端口   |
+| `pnpm shoot:readme`      | 重新生成本文档里的截图    |
 
 开发模式与预览产物的区别：`storybook dev` 边编译边服务，永远是最新源码；
 `build-storybook` 产出真实发布物，`preview-storybook` 用它验证部署后的样子。
