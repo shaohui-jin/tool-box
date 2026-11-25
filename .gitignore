@@ -1,0 +1,13 @@
+node_modules
+dist
+storybook-static
+coverage
+*.log
+*.tsbuildinfo
+.timestamp-*.mjs
+.DS_Store
+.env
+.env.*
+.vscode/*
+!.vscode/extensions.json
+/.idea/

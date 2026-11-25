@@ -1,0 +1,85 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="介绍/开始使用" />
+
+# @shaohui_jin/comp-lib
+
+Vue 3 组件库：基础组件、交互组件、CRUD 表格（5 种渲染模式）与主题配置系统。
+
+## 安装
+
+```bash
+pnpm add @shaohui_jin/comp-lib element-plus @element-plus/icons-vue vue
+```
+
+`element-plus`、`@element-plus/icons-vue`、`vue` 都是 peerDependency，需要宿主自己安装。
+
+## 引入
+
+```ts
+import { createApp } from "vue";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
+import CompLib, { createCompLib, elementPlusLocale } from "@shaohui_jin/comp-lib";
+import "@shaohui_jin/comp-lib/style.css";
+
+const app = createApp(App);
+
+app.use(ElementPlus, { locale: elementPlusLocale });
+// 自定义主题：不传则用默认配色
+app.use(createCompLib({ theme: { colorPrimary: "#6366f1" } }));
+// 全量注册组件（也可只 import 需要的组件）
+app.use(CompLib);
+
+app.mount("#app");
+```
+
+## 按需引入
+
+```ts
+import { BaseTable, Tag, type BaseTableColumn } from "@shaohui_jin/comp-lib";
+```
+
+## 主题
+
+组件库暴露两套 CSS 变量的命名空间：
+
+- `--comp-*` —— 组件库自有变量（文字色、背景色、圆角、字号等）
+- `--el-*` —— 同步给 Element Plus，保证原生组件与库内组件视觉一致
+
+改主题有三种方式，优先级递增：
+
+| 方式 | 作用范围 | 用法 |
+| --- | --- | --- |
+| `createCompLib(config)` | 全局 | `app.use(createCompLib({ theme }))` |
+| `<ConfigProvider :theme>` | 子树 | 包裹需要覆盖的那部分 DOM |
+| 组件 `theme` prop | 单个组件 | `BaseTable` 等支持 |
+
+## skia-wasm 模式（可选）
+
+`BaseTable` 的 `skia-wasm` 模式依赖 CanvasKit，`canvaskit-wasm` 是**可选** peerDependency：
+
+```bash
+pnpm add canvaskit-wasm
+```
+
+wasm 与中文字体不由本包内联，需要自己提供：
+
+```vue
+<BaseTable
+  mode="skia-wasm"
+  :table-data="rows"
+  :columns="columns"
+  skia-wasm-base-url="/wasm/"
+  skia-typeface-url="/fonts/NotoSansSC-400.woff2"
+/>
+```
+
+不配置时组件会回退到 CanvasKit 内置字体（中文缺字形但不会崩）。
+
+## 包内有什么
+
+- **基础**：`Tag` `Dot` `Image3D` `ImageCarousel` `ImagePointer` `ImageLightbox` `CodeBlock` `WidgetTabs`
+- **交互**：`SplitPane` `DragSortList` `FloatingToolbar` `TreeTransfer` `StepWizard` `ContextMenu` `CanvasTime` `CanvasCountUp` `HeatmapCalendar`
+- **CRUD**：`BaseTable` `BaseSearch` `BaseSearchField` `BaseSearchDrawer` `BaseColumnSetting` `BaseCrud`
+- **配置**：`createCompLib` `ConfigProvider` `useLibConfig` `themePresets`

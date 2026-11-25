@@ -1,0 +1,78 @@
+{
+  "name": "@shaohui_jin/comp-lib",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Vue 3 组件库：基础组件、交互组件、CRUD 表格（5 种渲染模式）与主题配置系统",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/index.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css",
+    "./dist/index.css"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "test": "echo \"no tests yet\" && exit 0",
+    "prepublishOnly": "pnpm run typecheck && pnpm run build"
+  },
+  "dependencies": {
+    "@shaohui_jin/utils-lib": "workspace:^",
+    "highlight.js": "^11.11.1",
+    "lodash-es": "^4.18.1"
+  },
+  "peerDependencies": {
+    "@element-plus/icons-vue": "^2.3.0",
+    "canvaskit-wasm": "^0.41.0",
+    "element-plus": "^2.8.0",
+    "vue": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "canvaskit-wasm": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@types/lodash-es": "^4.17.12",
+    "@vitejs/plugin-vue": "^6.0.11",
+    "@vue/tsconfig": "^0.7.0",
+    "canvaskit-wasm": "^0.41.1",
+    "element-plus": "^2.8.8",
+    "sass": "^1.81.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.8",
+    "vite-plugin-dts": "^5.1.2",
+    "vue": "^3.5.46",
+    "vue-tsc": "^3.3.14"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "components",
+    "ui",
+    "crud",
+    "table",
+    "canvas",
+    "shaohui_jin"
+  ]
+}

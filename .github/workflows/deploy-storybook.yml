@@ -1,0 +1,78 @@
+# 把 Storybook 静态站部署到 GitHub Pages。
+#
+# ────────────────────────────────────────────────────────────────
+# 当前状态：**自动触发被刻意关掉**。
+#   push 触发分支整块注释，只保留 workflow_dispatch（手动跑）。
+#   确认文档站构建无误后，把 on.push 那两行的注释去掉即可。
+# ────────────────────────────────────────────────────────────────
+#
+# 首次部署前需要在仓库 Settings → Pages 里把 Source 设为 "GitHub Actions"。
+name: Deploy Storybook
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - master
+  #     - main
+  #   paths:
+  #     - 'packages/comp-lib/**'
+  #     - '.storybook/**'
+  #     - '.github/workflows/deploy-storybook.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只保留一个部署任务，且不取消正在进行的部署
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Storybook 的 viteFinal 里把 @shaohui_jin/comp-lib 指向源码，
+      # 但 comp-lib 仍以 workspace 依赖引用 utils-lib（exports 指向 dist），需先构建。
+      - name: Build utils-lib
+        run: pnpm --filter @shaohui_jin/utils-lib run build
+
+      - name: Build Storybook
+        run: pnpm build-storybook
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: storybook-static
+
+  deploy:
+    name: Deploy to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

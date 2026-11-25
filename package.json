@@ -1,0 +1,53 @@
+{
+  "name": "comp-lib-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "shaohui_jin 组件库与工具库（monorepo）：@shaohui_jin/comp-lib / @shaohui_jin/utils-lib",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "scripts": {
+    "build": "pnpm -r --filter \"./packages/**\" build",
+    "typecheck": "pnpm -r --filter \"./packages/**\" typecheck",
+    "test": "pnpm -r --filter \"./packages/**\" test",
+    "test:hooks": "node --test scripts/hooks/*.test.mjs",
+    "lint": "eslint . && pnpm lint:style",
+    "lint:eslint": "eslint .",
+    "lint:style": "stylelint \"packages/**/*.{css,scss,vue}\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@eslint/js": "^9.17.0",
+    "@storybook/addon-a11y": "^10.6.8",
+    "@storybook/addon-docs": "^10.6.8",
+    "@storybook/vue3-vite": "^10.6.8",
+    "@types/node": "^24.0.0",
+    "@vitejs/plugin-vue": "^6.0.11",
+    "element-plus": "^2.8.8",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^9.31.0",
+    "husky": "^9.1.7",
+    "postcss-html": "^1.7.0",
+    "prettier": "^3.3.3",
+    "sass": "^1.81.0",
+    "storybook": "^10.6.8",
+    "stylelint": "^17.15.0",
+    "stylelint-config-recommended-scss": "^17.0.0",
+    "stylelint-config-recommended-vue": "^1.6.0",
+    "stylelint-config-standard": "^40.0.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.18.2",
+    "vite": "^7.3.8",
+    "vue": "^3.5.46",
+    "vue-eslint-parser": "^9.4.3"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "@shaohui_jin/utils-lib",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "零依赖的 TypeScript 工具函数与类型体操合集",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "prepublishOnly": "pnpm run typecheck && pnpm run build"
+  },
+  "devDependencies": {
+    "tsup": "^9.0.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "utils",
+    "typescript",
+    "type-challenges",
+    "shaohui_jin"
+  ]
+}
