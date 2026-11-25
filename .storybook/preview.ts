@@ -18,7 +18,7 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    docs: {
+    docs: { 
       // 每个组件自动生成 Docs 页，Props/Events 表从 TS 类型推导
       defaultName: "文档",
     },

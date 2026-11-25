@@ -16,7 +16,7 @@
     "test:hooks": "node --test scripts/hooks/*.test.mjs",
     "lint": "eslint . && pnpm lint:style",
     "lint:eslint": "eslint .",
-    "lint:style": "stylelint \"packages/**/*.{css,scss,vue}\"",
+    "lint:style": "stylelint \"packages/*/src/**/*.{css,scss,vue}\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "storybook": "storybook dev -p 6006",
