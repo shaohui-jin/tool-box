@@ -147,14 +147,14 @@ async function main() {
 
   mkdirSync(OUT_DIR, { recursive: true });
 
+  // 直接调 http-server 的可执行文件，不经 npx 包装：
+  // npx 会多一层进程，kill 掉 npx 后底下的 http-server 会变成孤儿占住端口。
+  // 用 node 直接跑它的 CLI，这样 server.kill() 杀的就是真正的服务进程。
+  const httpServerCli = join(ROOT, "node_modules", "http-server", "bin", "http-server");
   const server = spawn(
-    "npx.cmd",
-    ["http-server", "storybook-static", "-p", String(PORT), "-c-1", "--silent"],
-    {
-      cwd: ROOT,
-      stdio: "ignore",
-      shell: true,
-    },
+    process.execPath,
+    [httpServerCli, "storybook-static", "-p", String(PORT), "-c-1", "--silent"],
+    { cwd: ROOT, stdio: "ignore" },
   );
 
   const errors = [];
@@ -219,7 +219,13 @@ async function main() {
     await context.close();
   } finally {
     await browser?.close();
+    // 等子进程真正退出，否则脚本结束后端口可能还被占着
     server.kill();
+    await new Promise((r) => {
+      if (server.exitCode !== null) return r();
+      server.once("exit", r);
+      setTimeout(r, 3000);
+    });
   }
 
   const total = pngSize(OUT_DIR);
