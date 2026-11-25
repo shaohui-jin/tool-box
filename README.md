@@ -4,10 +4,10 @@ shaohui_jin 的组件库与工具库，pnpm monorepo。
 
 > 仓库名 `tool-box`；本地文件夹名沿用 `comp-lib` 只是历史原因，与包名无关。
 
-| 包 | 说明 | 依赖 |
-| --- | --- | --- |
-| [`@shaohui_jin/comp-lib`](packages/comp-lib) | Vue 3 组件库：基础 / 交互 / CRUD 组件 + 主题配置系统 | vue、element-plus |
-| [`@shaohui_jin/utils-lib`](packages/utils-lib) | 零依赖工具函数与类型体操 | 无 |
+| 包                                             | 说明                                                 | 依赖              |
+| ---------------------------------------------- | ---------------------------------------------------- | ----------------- |
+| [`@shaohui_jin/comp-lib`](packages/comp-lib)   | Vue 3 组件库：基础 / 交互 / CRUD 组件 + 主题配置系统 | vue、element-plus |
+| [`@shaohui_jin/utils-lib`](packages/utils-lib) | 零依赖工具函数与类型体操                             | 无                |
 
 ## 环境
 
@@ -52,9 +52,17 @@ packages/
 - 工具：`packages/utils-lib/src/**/*.stories.ts`（交互式面板）与类型体操的 MDX
 
 ```bash
-pnpm storybook          # 本地预览
-pnpm build-storybook    # 构建静态站
+pnpm storybook          # 开发模式，6006 端口，带热更新
+pnpm build-storybook    # 构建静态站到 storybook-static/
+pnpm preview-storybook  # 预览构建后的产物，6007 端口
 ```
+
+开发模式与预览产物的区别值得说清楚：`storybook dev` 是边编译边服务，看到的永远是最新源码；
+`build-storybook` 产出的是真实发布物，`preview-storybook` 用它验证「部署到 Pages 之后长什么样」。
+提交前跑一次预览，能提前发现只在生产构建里暴露的问题（资源路径、按需加载、压缩后的报错）。
+
+用 `http-server` 而不是 `serve`：后者会把 `/iframe.html` 重写成 `/iframe`，
+Storybook 拿不到 iframe 就会显示 "No Preview"。这不是配置问题，是 `serve` 的 rewrite 行为。
 
 提交到 `master` 后，[deploy-storybook.yml](.github/workflows/deploy-storybook.yml)
 会自动把文档站发布到 GitHub Pages。npm 发布是另一条流水，保持手动。

@@ -21,6 +21,7 @@
     "format:check": "prettier --check .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "preview-storybook": "http-server storybook-static -p 6007 -c-1 --silent",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -36,6 +37,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^9.31.0",
     "husky": "^9.1.7",
+    "http-server": "^14.1.1",
     "postcss-html": "^1.7.0",
     "prettier": "^3.3.3",
     "sass": "^1.81.0",
