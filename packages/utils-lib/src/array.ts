@@ -16,10 +16,7 @@ export const flattenTree = <T = any>(arr: T[], childrenKey = "children"): T[] =>
 /**
  * 比较两个基础类型数组是否相同（与顺序无关）
  */
-export function isArrEqual(
-  arr1: Array<string | number>,
-  arr2: Array<string | number>,
-): boolean {
+export function isArrEqual(arr1: Array<string | number>, arr2: Array<string | number>): boolean {
   if (arr1.length !== arr2.length) return false;
   const sorted1 = [...arr1].sort();
   const sorted2 = [...arr2].sort();

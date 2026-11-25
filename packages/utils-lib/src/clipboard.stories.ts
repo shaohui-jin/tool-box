@@ -32,7 +32,10 @@ export const Copy: Story = {
       async function run() {
         const ok = await copyToClipboard(text.value);
         const time = new Date().toLocaleTimeString();
-        logs.value = [`${time}  ${ok ? "成功" : "失败"}  "${text.value}"`, ...logs.value].slice(0, 10);
+        logs.value = [`${time}  ${ok ? "成功" : "失败"}  "${text.value}"`, ...logs.value].slice(
+          0,
+          10,
+        );
       }
 
       return { text, logs, run };

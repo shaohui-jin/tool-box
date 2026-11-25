@@ -42,4 +42,5 @@ function onUpdate(val: string | number | boolean) {
     :disabled="disabled ?? false"
     :before-change="beforeChange"
     @update:model-value="onUpdate"
-  /></template>
+  />
+</template>

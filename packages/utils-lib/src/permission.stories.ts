@@ -74,7 +74,10 @@ export const UnknownPermission: Story = {
   render: () => ({
     components: { PanelDemo, PanelLog },
     setup() {
-      const { hasPermission, getPermission, switchPermission } = usePermission(["add", "edit"] as const);
+      const { hasPermission, getPermission, switchPermission } = usePermission([
+        "add",
+        "edit",
+      ] as const);
       const logs = ref<string[]>([]);
 
       function run() {

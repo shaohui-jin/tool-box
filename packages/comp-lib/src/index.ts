@@ -144,7 +144,10 @@ export {
 } from "./components/crud/base-table/utils/column";
 
 /** @deprecated 使用 createCompLib 配置代替；保留导出仅为兼容旧代码 */
-export { tableLayoutDefaults, tableSurfaceConfig } from "./components/crud/base-table/theme/tableSurface";
+export {
+  tableLayoutDefaults,
+  tableSurfaceConfig,
+} from "./components/crud/base-table/theme/tableSurface";
 
 const components = [
   Dot,

@@ -22,16 +22,16 @@ import type { getOptional, arrayToUnion } from "@shaohui_jin/utils-lib";
 
 ## 模块
 
-| 模块 | 导出 |
-| --- | --- |
-| 颜色 | `rgbaToHex` `hexToRGBA` `colorToRGBA` |
-| 数字 | `getRandom` `scaleFormat` |
-| 对象 | `flattenObj` `unFlatten` `isObjEqual` `isObjEmpty` |
-| 数组 | `flattenTree` `isArrEqual` |
-| 剪贴板 | `copyToClipboard` |
-| 防抖 | `debounce` |
-| 性能 | `performChunk` `concurRequest` |
-| 权限 | `usePermission` |
+| 模块     | 导出                                                             |
+| -------- | ---------------------------------------------------------------- |
+| 颜色     | `rgbaToHex` `hexToRGBA` `colorToRGBA`                            |
+| 数字     | `getRandom` `scaleFormat`                                        |
+| 对象     | `flattenObj` `unFlatten` `isObjEqual` `isObjEmpty`               |
+| 数组     | `flattenTree` `isArrEqual`                                       |
+| 剪贴板   | `copyToClipboard`                                                |
+| 防抖     | `debounce`                                                       |
+| 性能     | `performChunk` `concurRequest`                                   |
+| 权限     | `usePermission`                                                  |
 | 类型体操 | `getValue` `setValue` `getOptional` `setOptional` `arrayToUnion` |
 
 ## 完整文档

@@ -38,11 +38,11 @@ import { BaseTable, Tag, type BaseTableColumn } from "@shaohui_jin/comp-lib";
 
 ## 组件
 
-| 分组 | 组件 |
-| --- | --- |
-| 基础 | `Tag` `Dot` `Image3D` `ImageCarousel` `ImagePointer` `ImageLightbox` `CodeBlock` `WidgetTabs` |
+| 分组 | 组件                                                                                                                                  |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 基础 | `Tag` `Dot` `Image3D` `ImageCarousel` `ImagePointer` `ImageLightbox` `CodeBlock` `WidgetTabs`                                         |
 | 交互 | `SplitPane` `DragSortList` `FloatingToolbar` `TreeTransfer` `StepWizard` `ContextMenu` `CanvasTime` `CanvasCountUp` `HeatmapCalendar` |
-| CRUD | `BaseTable` `BaseSearch` `BaseSearchField` `BaseSearchDrawer` `BaseColumnSetting` `BaseCrud` |
+| CRUD | `BaseTable` `BaseSearch` `BaseSearchField` `BaseSearchDrawer` `BaseColumnSetting` `BaseCrud`                                          |
 
 ## 主题
 
@@ -53,21 +53,21 @@ import { BaseTable, Tag, type BaseTableColumn } from "@shaohui_jin/comp-lib";
 
 三种改主题方式，优先级递增：
 
-| 方式 | 范围 | 用法 |
-| --- | --- | --- |
-| `createCompLib(config)` | 全局 | `app.use(createCompLib({ theme }))` |
-| `<ConfigProvider :theme>` | 子树 | 包裹需要覆盖的 DOM |
-| 组件 `theme` prop | 单组件 | 如 `BaseTable` |
+| 方式                      | 范围   | 用法                                |
+| ------------------------- | ------ | ----------------------------------- |
+| `createCompLib(config)`   | 全局   | `app.use(createCompLib({ theme }))` |
+| `<ConfigProvider :theme>` | 子树   | 包裹需要覆盖的 DOM                  |
+| 组件 `theme` prop         | 单组件 | 如 `BaseTable`                      |
 
 ## BaseTable 的 5 种渲染模式
 
-| 模式 | 实现 | 适用 |
-| --- | --- | --- |
-| `element` | ElTable 封装 | 常规数据量，能力最全 |
-| `virtual` | ElTableV2 虚拟滚动 | 万级行，DOM 可控 |
-| `canvas` | Canvas 2D 视口重绘 | 超大数据，结构简单 |
-| `canvas-tile` | Canvas 整表预渲染 + 裁切 | 超大数据，减少重绘 |
-| `skia-wasm` | CanvasKit（Skia WASM） | 需要 wasm，见下 |
+| 模式          | 实现                     | 适用                 |
+| ------------- | ------------------------ | -------------------- |
+| `element`     | ElTable 封装             | 常规数据量，能力最全 |
+| `virtual`     | ElTableV2 虚拟滚动       | 万级行，DOM 可控     |
+| `canvas`      | Canvas 2D 视口重绘       | 超大数据，结构简单   |
+| `canvas-tile` | Canvas 整表预渲染 + 裁切 | 超大数据，减少重绘   |
+| `skia-wasm`   | CanvasKit（Skia WASM）   | 需要 wasm，见下      |
 
 ### skia-wasm 模式（可选）
 

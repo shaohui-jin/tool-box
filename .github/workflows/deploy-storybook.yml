@@ -16,9 +16,9 @@ on:
     branches:
       - master
     paths:
-      - 'packages/**'
-      - '.storybook/**'
-      - '.github/workflows/deploy-storybook.yml'
+      - "packages/**"
+      - ".storybook/**"
+      - ".github/workflows/deploy-storybook.yml"
 
 permissions:
   contents: read

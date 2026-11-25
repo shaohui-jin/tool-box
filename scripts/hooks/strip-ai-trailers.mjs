@@ -16,7 +16,7 @@
  * 退出码恒为 0：这是清理，不是拦截。拦下来只会逼人 --no-verify，
  * 而 --no-verify 会连带跳过所有别的检查。
  */
-import { readFileSync, writeFileSync, realpathSync } from 'node:fs';
+import { readFileSync, writeFileSync, realpathSync } from "node:fs";
 
 /**
  * 要剥掉的尾注。只匹配「AI 工具的署名」，不碰真人的 Co-authored-by。
@@ -52,7 +52,7 @@ export function isAiTrailer(line) {
  * @returns {{ message: string, removed: string[] }}
  */
 export function stripAiTrailers(message) {
-  const eol = message.includes('\r\n') ? '\r\n' : '\n';
+  const eol = message.includes("\r\n") ? "\r\n" : "\n";
   const lines = message.split(/\r?\n/);
 
   /*
@@ -64,11 +64,11 @@ export function stripAiTrailers(message) {
    * 更靠前的段落里）。
    */
   let end = lines.length - 1;
-  while (end >= 0 && lines[end].trim() === '') end--;
+  while (end >= 0 && lines[end].trim() === "") end--;
   if (end < 0) return { message, removed: [] };
 
   let start = end;
-  while (start > 0 && lines[start - 1].trim() !== '') start--;
+  while (start > 0 && lines[start - 1].trim() !== "") start--;
 
   const removed = [];
   const kept = [];
@@ -84,9 +84,9 @@ export function stripAiTrailers(message) {
    * `git log` 看起来像多按了一次回车。
    */
   const head = lines.slice(0, start);
-  while (head.length && head[head.length - 1].trim() === '') head.pop();
+  while (head.length && head[head.length - 1].trim() === "") head.pop();
 
-  const out = kept.length ? [...head, '', ...kept] : head;
+  const out = kept.length ? [...head, "", ...kept] : head;
   return { message: out.join(eol) + eol, removed };
 }
 
@@ -98,11 +98,11 @@ function main() {
     process.exit(0);
   }
 
-  const original = readFileSync(file, 'utf8');
+  const original = readFileSync(file, "utf8");
   const { message, removed } = stripAiTrailers(original);
   if (removed.length === 0) process.exit(0);
 
-  writeFileSync(file, message, 'utf8');
+  writeFileSync(file, message, "utf8");
   // 提示走 stderr：stdout 会被 git 吞进编辑器，看不见
   process.stderr.write(
     `[commit-msg] 已移除 ${removed.length} 条 AI 协作尾注（约定：不加 AI 作者）\n`,

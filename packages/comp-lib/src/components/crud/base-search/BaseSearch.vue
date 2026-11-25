@@ -153,7 +153,8 @@ $search-control-width: 200px;
 $search-daterange-width: 350px;
 // 标准字段 + 日期范围并排的最小容器宽度（含 padding，不压缩桌面端日期范围展示）
 $search-stack-bp: calc(
-  (#{$search-label-max} + #{$search-control-width}) + (80px + #{$search-daterange-width}) + 16px + 32px
+  (#{$search-label-max} + #{$search-control-width}) + (80px + #{$search-daterange-width}) + 16px +
+    32px
 );
 
 .crud-base-search {

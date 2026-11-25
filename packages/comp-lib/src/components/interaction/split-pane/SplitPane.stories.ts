@@ -10,7 +10,10 @@ const meta = {
   component: SplitPane,
   tags: ["autodocs"],
   argTypes: {
-    ratio: { control: { type: "range", min: 0.1, max: 0.9, step: 0.05 }, description: "左侧占比（v-model:ratio）" },
+    ratio: {
+      control: { type: "range", min: 0.1, max: 0.9, step: 0.05 },
+      description: "左侧占比（v-model:ratio）",
+    },
     minRatio: { control: "number", description: "最小占比" },
     maxRatio: { control: "number", description: "最大占比" },
   },

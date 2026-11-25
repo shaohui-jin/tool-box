@@ -49,11 +49,11 @@ import { BaseTable, Tag, type BaseTableColumn } from "@shaohui_jin/comp-lib";
 
 改主题有三种方式，优先级递增：
 
-| 方式 | 作用范围 | 用法 |
-| --- | --- | --- |
-| `createCompLib(config)` | 全局 | `app.use(createCompLib({ theme }))` |
-| `<ConfigProvider :theme>` | 子树 | 包裹需要覆盖的那部分 DOM |
-| 组件 `theme` prop | 单个组件 | `BaseTable` 等支持 |
+| 方式                      | 作用范围 | 用法                                |
+| ------------------------- | -------- | ----------------------------------- |
+| `createCompLib(config)`   | 全局     | `app.use(createCompLib({ theme }))` |
+| `<ConfigProvider :theme>` | 子树     | 包裹需要覆盖的那部分 DOM            |
+| 组件 `theme` prop         | 单个组件 | `BaseTable` 等支持                  |
 
 ## skia-wasm 模式（可选）
 

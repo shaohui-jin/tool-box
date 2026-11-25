@@ -101,10 +101,17 @@ export const ImmediateMode: Story = {
     setup() {
       const logs = ref<string[]>([]);
       let n = 0;
-      const fn = debounce(() => {
-        n++;
-        logs.value = [`${new Date().toLocaleTimeString()}  第 ${n} 次执行`, ...logs.value].slice(0, 10);
-      }, 800, true);
+      const fn = debounce(
+        () => {
+          n++;
+          logs.value = [`${new Date().toLocaleTimeString()}  第 ${n} 次执行`, ...logs.value].slice(
+            0,
+            10,
+          );
+        },
+        800,
+        true,
+      );
       return { logs, fn };
     },
     template: `

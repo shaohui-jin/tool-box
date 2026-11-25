@@ -24,15 +24,20 @@ export const FlattenTree: Story = {
     components: { PanelDemo, PanelRow },
     setup() {
       const tree = ref([
-        { id: 1, label: "研发中心", children: [{ id: 2, label: "前端组" }, { id: 3, label: "后端组" }] },
+        {
+          id: 1,
+          label: "研发中心",
+          children: [
+            { id: 2, label: "前端组" },
+            { id: 3, label: "后端组" },
+          ],
+        },
         { id: 4, label: "产品部" },
       ]);
       const key = ref("children");
 
       const flat = computed(() => flattenTree(tree.value, key.value));
-      const summary = computed(() =>
-        flat.value.map((n) => `${n.id}:${n.label}`).join(" → "),
-      );
+      const summary = computed(() => flat.value.map((n) => `${n.id}:${n.label}`).join(" → "));
 
       function addChild() {
         const parent = tree.value[0];
